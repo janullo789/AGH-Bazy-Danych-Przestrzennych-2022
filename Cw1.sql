@@ -59,7 +59,11 @@ ORDER BY ST_Area(geom) DESC LIMIT 2;
 -- 5. Wyznacz najkrótszą odległość między budynkiem BuildingC a punktem G.
 
 SELECT ST_Distance(bul.geom, pkt.geom) FROM buildings bul CROSS JOIN pktinfo pkt
-WHERE bul.name = 'BuildingC' AND pkt.name = 'G';
+WHERE bul.name = 'BuildingC' AND pkt.name = 'G'; -- iloczyn kartezjański
+
+SELECT ST_Distance(
+	(SELECT geom FROM buildings WHERE name = 'BuildingC'),
+	(SELECT geom FROM pktinfo WHERE name = 'G'));
 
 -- 6. Wypisz pole powierzchni tej części budynku BuildingC, która znajduje się w odległości większej niż 0.5 od budynku BuildingB.
 
